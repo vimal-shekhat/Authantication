@@ -6,7 +6,9 @@ const register = (name,email,mobile,profile,countory, password) => {
   let promise = new Promise(function(resolve, reject) {
   axios.post(API_URL + "signup", {
     name,email,mobile,profile,countory, password
-  }).then((response)=>{
+  },
+   {'Content-Type': 'multipart/form-data'}
+  ).then((response)=>{
     if(response.data.status===200){
      
          resolve(response.data);
@@ -26,13 +28,15 @@ const login = (email, password) => {
       password,
     })
     .then((response) => {
-      console.log(response);
-       if (response.data?.status==400) {
+       if (response.data?.status===400) {
         reject(response.data.error)
       
-      }else if(response.data?.token){
+      }else if(response.data.status===200){
         
-        localStorage.setItem("user", JSON.stringify(response.data));
+        const userdata=response.data.user;
+        userdata['token']=response.data.token;
+      // console.log(userdata);
+        localStorage.setItem("user", JSON.stringify(userdata));
         resolve(response.data);
       }
       

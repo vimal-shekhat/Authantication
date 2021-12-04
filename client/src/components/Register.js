@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { Redirect } from 'react-router-dom';
 import { isEmail } from "validator";
 
 import { register } from "../actions/auth";
@@ -67,6 +68,8 @@ const vpassword = (value) => {
 };
 
 const Register = () => {
+
+  
   const form = useRef();
   const checkBtn = useRef();
 
@@ -81,7 +84,12 @@ const Register = () => {
   const [successful, setSuccessful] = useState(false);
 
   const { message } = useSelector(state => state.message);
+  const { isLoggedIn } = useSelector(state => state.auth);
   const dispatch = useDispatch();
+
+  if (isLoggedIn) {
+    return <Redirect to="/profile" />;
+  }
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -200,6 +208,7 @@ const Register = () => {
                 />
               </div>
 
+            
               <div className="form-group">
                 <button className="btn btn-primary btn-block">Sign Up</button>
               </div>

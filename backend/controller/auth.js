@@ -39,7 +39,7 @@ exports.Login = async(req,res)=>{
 
 exports.Register = async(req,res)=>{
     
-    console.log(req.body);
+   
     //validate data
     const {error} = await validateUserRegister(req.body)
     if(error) {
@@ -84,7 +84,7 @@ exports.EditData = async(req,res)=>{
 }
 exports.AllData=async(req,res)=>{
 
-    res.send({ status :200 ,data :"This is custome user made data"})
+    res.send({ status :200 ,data :"Athantication Demo Here we can Access Profile Page As Private"})
 
 
 }
