@@ -14,7 +14,7 @@ const initialState = user
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
-
+  console.log("buddhi vagara na", type, payload);
   switch (type) {
     case REGISTER_SUCCESS:
       return {

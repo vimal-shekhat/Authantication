@@ -9,10 +9,10 @@ import {
 
 import AuthService from "../services/auth.service";
 
-export const register = (name,email,mobile,profile,countory, password) => (dispatch) => {
-  return AuthService.register(name,email,mobile,profile,countory, password).then(
+export const register = (name, email, mobile, profile, countory, password) => (dispatch) => {
+  return AuthService.register(name, email, mobile, profile, countory, password).then(
     (response) => {
-      
+
       dispatch({
         type: REGISTER_SUCCESS,
       });
@@ -53,7 +53,7 @@ export const login = (username, password) => (dispatch) => {
         type: LOGIN_SUCCESS,
         payload: { user: data.user },
       });
-  
+
       return Promise.resolve();
     },
     (error) => {
@@ -78,10 +78,16 @@ export const login = (username, password) => (dispatch) => {
   );
 };
 
-export const logout = () => (dispatch) => {
-  AuthService.logout();
 
-  dispatch({
-    type: LOGOUT,
-  });
+export const logout = () => (dispatch) => {
+  return AuthService.logout().then(response => {
+    //console.log(">>>", response);
+    localStorage.removeItem("user");
+    dispatch({
+      type: LOGOUT
+    });
+
+  }).catch((error) => {
+    console.log("Eroor found");
+  })
 };

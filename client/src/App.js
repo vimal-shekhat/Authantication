@@ -16,7 +16,7 @@ import { history } from "./helpers/history"
 import EventBus from "./common/EventBus";
 
 const App = () => {
-  
+
   const { user: currentUser } = useSelector((state) => state.auth);
 
 
@@ -28,20 +28,12 @@ const App = () => {
     });
   }, [dispatch]);
 
-  const logOut = useCallback(() => {
+  const logOut = () => {
+
+    console.log("bitton clicked")
     dispatch(logout());
-  }, [dispatch]);
 
-  useEffect(() => {
-  
-    EventBus.on("logout", () => {
-      logOut();
-    });
-
-    return () => {
-      EventBus.remove("logout");
-    };
-  }, [currentUser, logOut]);
+  }
   return (
     <Router history={history}>
       <div>
@@ -73,9 +65,11 @@ const App = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="/login" className="nav-link" onClick={logOut}>
-                  LogOut
-                </a>
+                <input type="button" className="nav-link" value="Logout" onClick={
+
+                  logOut
+
+                } />
               </li>
             </div>
           ) : (
@@ -101,13 +95,13 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Private exact path="/profile" component={Profile} />
-            
+
           </Switch>
         </div>
 
-       
-      </div>
-    </Router>
+
+      </div >
+    </Router >
   );
 };
 
